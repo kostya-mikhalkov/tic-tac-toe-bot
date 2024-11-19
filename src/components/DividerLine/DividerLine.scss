@@ -1,0 +1,38 @@
+.divider-line {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.horizontal {
+        width: 337px;
+        height: 14px;
+    }
+
+    &.vertical {
+        width: 14px;
+        height: 106%;
+    }
+
+    /* Позиции для горизонтальных линий */
+    &.horizontal.position-1 {
+        top: 32.4%;
+    }
+    &.horizontal.position-2 {
+        top: 69.7%;
+    }
+
+    /* Позиции для вертикальных линий */
+    &.vertical.position-1 {
+        left: 32.3%;
+    }
+    &.vertical.position-2 {
+        left: 69.7%;
+    }
+
+    svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+}
