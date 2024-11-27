@@ -17,6 +17,11 @@ body {
     gap: 20px;
     border-radius: 32px;
     background-color: rgb(0, 0, 0);
+    &_btn {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
     .cell {
         background-color: rgb(0, 0, 0);
         display: flex;

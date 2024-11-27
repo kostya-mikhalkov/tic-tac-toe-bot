@@ -1,6 +1,9 @@
 import React, {FunctionComponent, useState} from "react";
 import DividerLine from "../DividerLine/DividerLine";
 import DifficultySelector from "../DifficultySelector/DifficultySelector";
+import PlaySelector from '../PlaySelector/PlaySelector';
+import HumanBotSelector from "../HumanBotSelector/HumanBotSelector";
+import ChoiceCrossOrZeroSelector from "../ChoiceCrossOrZeroSelector/ChoiceCrossOrZeroSelector";
 
 import './Game.scss';
 
@@ -24,7 +27,10 @@ const Game: FunctionComponent = (): JSX.Element => {
             <div className="game_btn">
                 <DifficultySelector selectedDifficulty = {difficulty}
                                     onDifficultyChange = {onChangeDifficulty}/>
+                <PlaySelector />
+                <HumanBotSelector />
             </div>
+            <ChoiceCrossOrZeroSelector />
         </div>
     )
 }

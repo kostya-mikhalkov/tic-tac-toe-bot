@@ -7,6 +7,7 @@
         width: 100px;
         margin-right: 10px;
         color: white;
+        font-size: 14px;
     }
 
     select {
@@ -20,15 +21,6 @@
         -moz-appearance: none;
         background-color: white;
         outline: none;
-
-        &:hover {
-            border-color: none;
-        }
-        option {
-            &:hover {
-                background-color: aqua;
-            }   
-        }
     }
 
     &::after {

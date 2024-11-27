@@ -1,0 +1,14 @@
+.selectedHumanOrBot {
+    padding-top: 16px;
+    &_btn {
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        width: 100px;
+        height: 27px;
+        cursor: pointer;
+        &:active {
+            background-color: rgb(252, 255, 55);
+        }
+    }
+}
