@@ -9,8 +9,9 @@ import X_little from '../../images/X_little.svg';
 
 const ChoiceCrossOrZeroSelector = (): JSX.Element => {
     const dispatch = useDispatch();
-    const state = useSelector((state: RootState) => state.choice.selection)
-
+    const state = useSelector((state: RootState) => state.choice.selection);
+    const playState = useSelector((state:RootState) => state.play.play);
+    
     return (
         <div>
             {state === '' ? (<div className="choiceZeroOrCross">
@@ -22,7 +23,7 @@ const ChoiceCrossOrZeroSelector = (): JSX.Element => {
                                     onClick={() => dispatch(selectXO("O"))} />
                             </div>) :
                 (<div className="choiceZeroOrCross">
-                    <img src={state === "X" ? O_little : X_little} 
+                    <img src={state === "X" ? X_little : O_little} 
                          alt={state}
                          onClick={() => dispatch(selectXO(state === "X" ? "O" : "X"))} />
                 </div>)

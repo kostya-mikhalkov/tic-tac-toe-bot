@@ -25,8 +25,7 @@ const Game: FunctionComponent = (): JSX.Element => {
                 return <div key={ind} className="cell"></div>
             })}
             <div className="game_btn">
-                <DifficultySelector selectedDifficulty = {difficulty}
-                                    onDifficultyChange = {onChangeDifficulty}/>
+                <DifficultySelector />
                 <PlaySelector />
                 <HumanBotSelector />
             </div>

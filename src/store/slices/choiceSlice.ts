@@ -17,6 +17,7 @@ const choiceSlice = createSlice({
         },
     },
 })
+console.log(choiceSlice)
 
 export const { selectXO } = choiceSlice.actions;
 export const choiseReducer = choiceSlice.reducer;
