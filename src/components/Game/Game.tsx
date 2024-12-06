@@ -1,5 +1,4 @@
 import {FunctionComponent, useState} from "react";
-import { useSelector } from "react-redux";
 import DividerLine from "../DividerLine/DividerLine";
 import DifficultySelector from "../DifficultySelector/DifficultySelector";
 import PlaySelector from '../PlaySelector/PlaySelector';
@@ -7,20 +6,19 @@ import HumanBotSelector from "../HumanBotSelector/HumanBotSelector";
 import ChoiceCrossOrZeroSelector from "../ChoiceCrossOrZeroSelector/ChoiceCrossOrZeroSelector";
 import Score from "../Score/Score";
 import Cell from "../Cell/Cell";
+import elementTypes from "../../types/elementTypes";
 
 import './Game.scss';
-import { RootState } from '../../store/store';
 
 const Game: FunctionComponent = (): JSX.Element => {
     const [difficulty, setDifficulty] = useState('easy');
-    const [choice, setChoice] = useState('');
-    const choiceState = useSelector((state: RootState) => state.choice.selection);
+    const [choice, setChoice] = useState<elementTypes>('');
 
     const onChangeDifficulty = (newDifficulty: string): void => {
         setDifficulty(newDifficulty)
     }
 
-    const onChangeXO = (elem: string): void => {
+    const onChangeXO = (elem: elementTypes): void => {
         setChoice(elem)
     }
 
@@ -34,7 +32,7 @@ const Game: FunctionComponent = (): JSX.Element => {
             <DividerLine orientation="vertical" position={2} />
             
             {Array.from({length: 9}).map((_, ind): JSX.Element => {
-                return <Cell key={ind} ind={ind} classes='cell' initialState={choiceState}/>
+                return <Cell key={ind} ind={ind} classes='cell' initialState={choice} onChangeXO={onChangeXO}/>
             })}
             <div className="game_btn">
                 <DifficultySelector />

@@ -35,6 +35,9 @@ body {
     }
     .cell-active {
         background-image: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
