@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import elementTypes from "../../types/elementTypes";
 
 export interface ChoiceState {
-    selection: "" | "X" | "O"
+    selection: elementTypes;
 }
 
 const initialState: ChoiceState = {
@@ -12,7 +13,7 @@ const choiceSlice = createSlice({
     name: 'choice',
     initialState,
     reducers: {
-        selectXO: (state, action: PayloadAction<"" | "X" | "O">) => {
+        selectXO: (state, action: PayloadAction<elementTypes>) => {
             state.selection = action.payload
         },
     },

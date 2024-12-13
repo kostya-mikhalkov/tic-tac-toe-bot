@@ -8,7 +8,6 @@ import './PlaySelector.scss';
 
 const PlaySelector: FunctionComponent = (): JSX.Element => {
     const state = useSelector((state: RootState) => state.play.play);
-    const difficultyState = useSelector((state: RootState) => state.level.level)
     const dispatch = useDispatch();
     
     const playChange = () => {

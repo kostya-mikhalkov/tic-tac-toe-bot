@@ -1,43 +1,46 @@
-import { memo, useState, useEffect, FunctionComponent } from "react";
-import { useSelector } from 'react-redux';
+import React, { memo, FunctionComponent } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../../store/store";
 import elementTypes from "../../types/elementTypes";
 import imageX from '../../images/X_little.svg';
 import imageO from '../../images/O_little.svg';
+import { addElements, addPlayer, botMoveOnBoard } from "../../store/slices/gameSlice";
 
 interface CellProps {
     ind: number;
     classes: string;
-    initialState: elementTypes;
-    onChangeXO: (elem: elementTypes) => void
 }
 
-const Cell: FunctionComponent<CellProps> = ({ ind, classes, initialState, onChangeXO }): JSX.Element => {
-    const [state, setState] = useState(false);
-    const [turn, setTurn] = useState("X");
+const Cell: FunctionComponent<CellProps> = ({ ind, classes }): JSX.Element => {
+    const dispatch = useDispatch();
     const playState = useSelector((state: RootState) => state.play.play);
-
-    useEffect(() => {
-        if (!playState) {
-            setState(false);
-        }
-    }, [playState]);
+    const botState = useSelector((state: RootState) => state.rival.rival);
+    const botMoveState = useSelector((state: RootState) => state.game.botMove);
+    const board = useSelector((state: RootState) => state.game.board);
+    const currentPlayer = useSelector((state: RootState) => state.game.currentPlayer);
 
     const handleChange = () => {
-        if (playState && !state) {
-            setState(true);
-            setTurn(initialState)
-            onChangeXO(initialState === 'X' ? 'O' : 'X')
+        if (!botState) {
+            if (playState && board[ind] === '' && !botMoveState) {
+                dispatch(addElements(ind));
+                dispatch(addPlayer(currentPlayer === 'X' ? 'O' : 'X'));
+                dispatch(botMoveOnBoard(true));
+            }
+        } else {
+            if (playState && board[ind] === '') {
+                dispatch(addElements(ind));
+                dispatch(addPlayer(currentPlayer === 'X' ? 'O' : 'X'));
+            }
         }
     };
 
     return (
         <div
             key={ind}
-            className={state ? 'cell-active' : classes}
+            className={board[ind] !== '' ? 'cell-active' : classes}
             onClick={() => playState && handleChange()}
         >
-            {state ? <img src={turn === 'X' ? imageX : imageO} alt={turn}/> : null}
+            {board[ind] !== '' ? <img src={board[ind] === 'X' ? imageX : imageO} alt={board[ind]} /> : null}
         </div>
     );
 };

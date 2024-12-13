@@ -1,16 +1,20 @@
 import React, { FunctionComponent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
-import { levelChange } from "../../store/slices/difficultySlice";
+import { addDifficulty } from "../../store/slices/gameSlice";
 
 import './DifficultySelector.scss';
 
 const DifficultySelector: FunctionComponent = (): JSX.Element => {
     const dispatch = useDispatch();
-    const selectedDifficulty = useSelector((state: RootState) => state.level.level);
+    const selectedDifficulty = useSelector((state: RootState) => state.game.botDifficulty);
     const playState = useSelector((state: RootState) => state.play.play); 
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => { dispatch(levelChange(event.target.value)); }; 
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => { 
+        const value = event.target.value as 'easy' | 'medium' | 'hard';
+        dispatch(addDifficulty(value)) 
+    };
+
     return ( 
         <div className="difficulty-selector"> 
             <label htmlFor="difficulty">Select difficulty:</label> 

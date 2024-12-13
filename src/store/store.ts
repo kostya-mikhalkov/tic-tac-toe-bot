@@ -1,17 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { choiseReducer } from "./slices/choiceSlice";
-import { levelReducer } from "./slices/difficultySlice";
 import { rivalReducer } from './slices/rivalSlice';
 import { playReducer } from "./slices/playSlice";
 import { scoreReducer } from "./slices/scoreSlice";
+import { gameReducer } from "./slices/gameSlice";
 
 export const store = configureStore({
   reducer: {
     choice: choiseReducer,
-    level: levelReducer,
     rival: rivalReducer,
     play: playReducer,
-    score: scoreReducer
+    score: scoreReducer,
+    game: gameReducer
   },
 });
 
