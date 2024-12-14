@@ -22,6 +22,11 @@ const gameSlice = createSlice({
         addElements: (state, action: PayloadAction<number>) => {
             state.board[action.payload] = state.currentPlayer
         },
+        resetGame: (state) => {
+            state.board = Array(9).fill("");
+            state.currentPlayer = "";
+            state.botMove = false;
+        },
         addPlayer: (state, action: PayloadAction<elementTypes>) => {
             state.currentPlayer = action.payload
         },
@@ -34,5 +39,5 @@ const gameSlice = createSlice({
     }
 })
 
-export const {addElements, addPlayer, addDifficulty, botMoveOnBoard} = gameSlice.actions;
+export const {addElements, addPlayer, addDifficulty, botMoveOnBoard, resetGame} = gameSlice.actions;
 export const gameReducer = gameSlice.reducer;

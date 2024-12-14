@@ -1,7 +1,6 @@
-import React, { memo, FunctionComponent } from "react";
+import { memo, FunctionComponent } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../../store/store";
-import elementTypes from "../../types/elementTypes";
 import imageX from '../../images/X_little.svg';
 import imageO from '../../images/O_little.svg';
 import { addElements, addPlayer, botMoveOnBoard } from "../../store/slices/gameSlice";
@@ -26,7 +25,8 @@ const Cell: FunctionComponent<CellProps> = ({ ind, classes }): JSX.Element => {
                 dispatch(addPlayer(currentPlayer === 'X' ? 'O' : 'X'));
                 dispatch(botMoveOnBoard(true));
             }
-        } else {
+        }
+        if (botState) {
             if (playState && board[ind] === '') {
                 dispatch(addElements(ind));
                 dispatch(addPlayer(currentPlayer === 'X' ? 'O' : 'X'));

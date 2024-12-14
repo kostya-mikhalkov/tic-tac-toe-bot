@@ -1,19 +1,20 @@
 import {FunctionComponent} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { play } from "../../store/slices/playSlice";
-import { selectXO } from "../../store/slices/choiceSlice";
 import { RootState } from "../../store/store";
+import { resetGame } from "../../store/slices/gameSlice";
 
 import './PlaySelector.scss';
 
 const PlaySelector: FunctionComponent = (): JSX.Element => {
     const state = useSelector((state: RootState) => state.play.play);
+    const board = useSelector((state: RootState) => state.game.board);
     const dispatch = useDispatch();
     
     const playChange = () => {
         dispatch(play(!state));
-        if (state !== false) {
-            dispatch(selectXO(''));
+        if (state) {
+            dispatch(resetGame())
         }
     };
 

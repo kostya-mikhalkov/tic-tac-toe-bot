@@ -19,6 +19,9 @@ const Game: FunctionComponent = (): JSX.Element => {
     const [choice, setChoice] = useState<elementTypes>('');
     const state = useSelector((state: RootState) => state)
     const botState = useSelector((state: RootState) => state.game);
+    const playState = useSelector((state: RootState) => state.play.play);
+    const choiceState = useSelector((state: RootState) => state.choice.selection);
+    const currentPlayer = useSelector((state: RootState) => state.game.currentPlayer)
     const {board, botMove} = botState;
     const dispatch = useDispatch();
 
@@ -32,6 +35,20 @@ const Game: FunctionComponent = (): JSX.Element => {
             BotMoveLogick(state, dispatch)
         }
     }, [botMove, dispatch, state])
+
+    useEffect(() => {
+        if (playState === true && choiceState === "") {
+            dispatch(selectXO("X"));
+            dispatch(addPlayer("X"));
+            setChoice("X")
+        }
+    }, [playState])
+
+    useEffect(() => {
+        if (playState) {
+            setChoice(currentPlayer)
+        }
+    }, [currentPlayer, playState])
 
     const onChangeXO = (elem: elementTypes): void => {
         setChoice(elem)
