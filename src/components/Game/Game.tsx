@@ -9,6 +9,7 @@ import ChoiceCrossOrZeroSelector from "../ChoiceCrossOrZeroSelector/ChoiceCrossO
 import Score from "../Score/Score";
 import Cell from "../Cell/Cell";
 import elementTypes from "../../types/elementTypes";
+import checkWinner from "../CheckWinner/checkWinner";
 import { selectXO } from "../../store/slices/choiceSlice";
 import { addPlayer } from "../../store/slices/gameSlice";
 import { RootState } from "../../store/store";
@@ -17,7 +18,6 @@ import './Game.scss';
 
 const Game: FunctionComponent = (): JSX.Element => {
     const [choice, setChoice] = useState<elementTypes>('');
-    const state = useSelector((state: RootState) => state)
     const botState = useSelector((state: RootState) => state.game);
     const playState = useSelector((state: RootState) => state.play.play);
     const choiceState = useSelector((state: RootState) => state.choice.selection);
@@ -27,14 +27,16 @@ const Game: FunctionComponent = (): JSX.Element => {
 
     useEffect(() => {
         dispatch(selectXO(choice));
-        dispatch(addPlayer(choice))
+        dispatch(addPlayer(choice));
+        checkWinner(board, currentPlayer, dispatch)
     }, [choice, dispatch]);
 
     useEffect(() => {
         if (botMove) {
-            BotMoveLogick(state, dispatch)
+            BotMoveLogick(board, currentPlayer, dispatch)
+            checkWinner(board, currentPlayer, dispatch)
         }
-    }, [botMove, dispatch, state])
+    }, [botMove, dispatch])
 
     useEffect(() => {
         if (playState === true && choiceState === "") {

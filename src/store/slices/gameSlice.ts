@@ -5,14 +5,22 @@ interface gameState {
     board: string[],
     currentPlayer: elementTypes,
     botDifficulty: 'easy' | 'medium' | 'hard',
-    botMove: boolean
+    botMove: boolean,
+    winner: {
+             x: number,
+             o: number
+            }
 }
 
 const initialState: gameState = {
     board: Array(9).fill(""),
     currentPlayer: "",
     botDifficulty: "easy",
-    botMove: false
+    botMove: false,
+    winner: {
+        x: 0,
+        o: 0
+    }
 }
 
 const gameSlice = createSlice({
@@ -35,9 +43,17 @@ const gameSlice = createSlice({
         },
         botMoveOnBoard: (state, action: PayloadAction<boolean>) => {
             state.botMove = action.payload
+        },
+        addWinner: (state, action: PayloadAction<string>) => {
+            if (action.payload === 'X') {
+                state.winner.x = state.winner.x + 1;
+            }
+            if (action.payload === 'O') {
+                state.winner.o = state.winner.o + 1;
+            }
         }
     }
 })
 
-export const {addElements, addPlayer, addDifficulty, botMoveOnBoard, resetGame} = gameSlice.actions;
+export const {addElements, addPlayer, addDifficulty, botMoveOnBoard, resetGame, addWinner} = gameSlice.actions;
 export const gameReducer = gameSlice.reducer;
