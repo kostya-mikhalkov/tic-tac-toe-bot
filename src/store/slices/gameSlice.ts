@@ -9,7 +9,8 @@ interface gameState {
     winner: {
              x: number,
              o: number
-            }
+            },
+    gameOver: boolean
 }
 
 const initialState: gameState = {
@@ -20,7 +21,8 @@ const initialState: gameState = {
     winner: {
         x: 0,
         o: 0
-    }
+    },
+    gameOver: false
 }
 
 const gameSlice = createSlice({
@@ -34,6 +36,7 @@ const gameSlice = createSlice({
             state.board = Array(9).fill("");
             state.currentPlayer = "";
             state.botMove = false;
+            state.gameOver = false;
         },
         addPlayer: (state, action: PayloadAction<elementTypes>) => {
             state.currentPlayer = action.payload
@@ -51,9 +54,13 @@ const gameSlice = createSlice({
             if (action.payload === 'O') {
                 state.winner.o = state.winner.o + 1;
             }
+            state.gameOver = true
+        },
+        gameOver: (state) => {
+            state.gameOver = true;
         }
     }
 })
 
-export const {addElements, addPlayer, addDifficulty, botMoveOnBoard, resetGame, addWinner} = gameSlice.actions;
+export const {addElements, addPlayer, addDifficulty, botMoveOnBoard, resetGame, addWinner, gameOver} = gameSlice.actions;
 export const gameReducer = gameSlice.reducer;

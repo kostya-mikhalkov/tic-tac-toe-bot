@@ -13,9 +13,7 @@ const PlaySelector: FunctionComponent = (): JSX.Element => {
     
     const playChange = () => {
         dispatch(play(!state));
-        if (state) {
-            dispatch(resetGame())
-        }
+        dispatch(resetGame())
     };
 
     return (

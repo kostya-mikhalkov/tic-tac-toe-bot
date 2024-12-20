@@ -1,5 +1,5 @@
-import { RootState, AppDispatch } from "../../store/store";
-import { addWinner } from "../../store/slices/gameSlice";
+import { AppDispatch } from "../../store/store";
+import { addWinner, gameOver } from "../../store/slices/gameSlice";
 
 const checkWinner = (board: string[], playerCurrent: string, dispatch: AppDispatch) => {
     const player = playerCurrent === 'X' ? 'O' : 'X';
@@ -16,6 +16,7 @@ const checkWinner = (board: string[], playerCurrent: string, dispatch: AppDispat
     for (const key of winnerCombination) {
         if (key.every(index => board[index] === player)) {
             dispatch(addWinner(player));
+            dispatch(gameOver())
             return;
         }
     }
