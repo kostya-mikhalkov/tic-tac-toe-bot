@@ -25,7 +25,6 @@ const Game: FunctionComponent = (): JSX.Element => {
     const playState = useSelector((state: RootState) => state.play.play);
     const choiceState = useSelector((state: RootState) => state.choice.selection);
     const currentPlayer = useSelector((state: RootState) => state.game.currentPlayer);
-    const gameOverState = useSelector((state: RootState) => state.game.gameOver);
     const {board, botMove} = botState;
     const dispatch = useDispatch();
 
@@ -35,10 +34,18 @@ const Game: FunctionComponent = (): JSX.Element => {
     }, [choice]);
 
     useEffect(() => {
-        if (botMove) {
-            BotMoveLogick(board, currentPlayer, dispatch)
+        let timerId: ReturnType<typeof setTimeout> | undefined;
+        if(botMove) {
+            setTimeout(() => {
+                BotMoveLogick(board, currentPlayer, dispatch);
+                checkWinner(board, currentPlayer, dispatch);
+            }, 1000)
         }
-        checkWinner(board, currentPlayer, dispatch)
+        return () => {
+            if(timerId) {
+                clearTimeout(timerId);
+            }
+        }
     }, [botMove])
 
     useEffect(() => {
@@ -53,11 +60,18 @@ const Game: FunctionComponent = (): JSX.Element => {
         if (playState) {
             setChoice(currentPlayer)
         }
+        checkWinner(board, currentPlayer, dispatch)
     }, [currentPlayer, playState])
 
     useEffect(() => {
         dispatch(play(false))
     }, [winnerX, winnerO])
+
+    useEffect(() => {
+        if (board.indexOf("") === -1) {
+            dispatch(play(false))
+        }
+    }, [botMove]);
 
     const onChangeXO = (elem: elementTypes): void => {
         setChoice(elem)

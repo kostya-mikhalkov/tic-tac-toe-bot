@@ -1,4 +1,5 @@
 import { AppDispatch } from '../../store/store';
+import { play } from '../../store/slices/playSlice';
 import { addElements, botMoveOnBoard, addPlayer } from "../../store/slices/gameSlice";
 
 const BotMoveLogick = (board: string[], player: string, dispatch: AppDispatch): void => {
@@ -38,13 +39,3 @@ const BotMoveLogick = (board: string[], player: string, dispatch: AppDispatch): 
 }
 
 export default BotMoveLogick;
-
-
-// const BotMoveLogick = (board: string[], player: string, dispatch: AppDispatch): void => {
-//     const ind = board.findIndex(item => item === '');
-//     if (ind !== -1) {
-//         dispatch(addElements(ind));
-//         dispatch(botMoveOnBoard(false));
-//         dispatch(addPlayer(player === 'X' ? 'O' : 'X'))
-//     }
-// }

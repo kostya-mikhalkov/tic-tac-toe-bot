@@ -34,7 +34,6 @@ const gameSlice = createSlice({
         },
         resetGame: (state) => {
             state.board = Array(9).fill("");
-            state.currentPlayer = "";
             state.botMove = false;
             state.gameOver = false;
         },

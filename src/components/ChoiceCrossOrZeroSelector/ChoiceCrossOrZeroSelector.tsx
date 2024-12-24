@@ -13,6 +13,7 @@ interface choiceState {
 
 const ChoiceCrossOrZeroSelector: FunctionComponent<choiceState> = ({onChangeXO, choiceXO}): JSX.Element => {
     const playState = useSelector((state:RootState) => state.play.play);
+    const currentPlayer = useSelector((state: RootState) => state.game.currentPlayer);
     useEffect(() => {
         if (playState === false) {
             onChangeXO('')
