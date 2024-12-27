@@ -18,21 +18,21 @@ const Cell: FunctionComponent<CellProps> = ({ ind, classes }): JSX.Element => {
     const botMoveState = useSelector((state: RootState) => state.game.botMove);
     const board = useSelector((state: RootState) => state.game.board);
     const currentPlayer = useSelector((state: RootState) => state.game.currentPlayer);
-
+    
     const handleChange = () => {
         if (!botState) {
             if (playState && board[ind] === '' && !botMoveState) {
                 dispatch(addElements(ind));
                 dispatch(addPlayer(currentPlayer === 'X' ? 'O' : 'X'));
                 dispatch(botMoveOnBoard(true));
-                checkWinner(board, currentPlayer, dispatch)
+                // checkWinner(board, currentPlayer, dispatch)
             }
         }
         if (botState) {
             if (playState && board[ind] === '') {
                 dispatch(addElements(ind));
                 dispatch(addPlayer(currentPlayer === 'X' ? 'O' : 'X'));
-                checkWinner(board, currentPlayer, dispatch)
+                // checkWinner(board, currentPlayer, dispatch)
             }
         }
     };

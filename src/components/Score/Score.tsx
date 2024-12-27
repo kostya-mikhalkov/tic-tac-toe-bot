@@ -8,8 +8,8 @@ import scoreImgO from '../../images/O_little.svg';
 import './Score.scss';
 
 const Score: FunctionComponent = (): JSX.Element => {
-    const stateX = useSelector((state: RootState) => state.score.scoreX);
-    const stateO = useSelector((state: RootState) => state.score.scoreO);
+    const stateX = useSelector((state: RootState) => state.game.winner.x);
+    const stateO = useSelector((state: RootState) => state.game.winner.o);
 
     return (
         <div className="score">

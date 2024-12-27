@@ -1,5 +1,4 @@
 import { AppDispatch } from '../../store/store';
-import { play } from '../../store/slices/playSlice';
 import { addElements, botMoveOnBoard, addPlayer } from "../../store/slices/gameSlice";
 
 const BotMoveLogick = (board: string[], player: string, dispatch: AppDispatch): void => {

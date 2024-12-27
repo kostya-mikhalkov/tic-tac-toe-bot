@@ -12,7 +12,7 @@ import { play } from "../../store/slices/playSlice";
 import elementTypes from "../../types/elementTypes";
 import checkWinner from "../CheckWinner/checkWinner";
 import { selectXO } from "../../store/slices/choiceSlice";
-import { addPlayer } from "../../store/slices/gameSlice";
+import { addPlayer, resetGame } from "../../store/slices/gameSlice";
 import { RootState } from "../../store/store";
 
 import './Game.scss';
@@ -25,6 +25,8 @@ const Game: FunctionComponent = (): JSX.Element => {
     const playState = useSelector((state: RootState) => state.play.play);
     const choiceState = useSelector((state: RootState) => state.choice.selection);
     const currentPlayer = useSelector((state: RootState) => state.game.currentPlayer);
+    const gameOver = useSelector((state: RootState) => state.game.gameOver);
+    const rivalState = useSelector((state: RootState) => state.rival.rival);
     const {board, botMove} = botState;
     const dispatch = useDispatch();
 
@@ -35,7 +37,7 @@ const Game: FunctionComponent = (): JSX.Element => {
 
     useEffect(() => {
         let timerId: ReturnType<typeof setTimeout> | undefined;
-        if(botMove) {
+        if(botMove && !gameOver) {
             setTimeout(() => {
                 BotMoveLogick(board, currentPlayer, dispatch);
                 checkWinner(board, currentPlayer, dispatch);
@@ -46,7 +48,7 @@ const Game: FunctionComponent = (): JSX.Element => {
                 clearTimeout(timerId);
             }
         }
-    }, [botMove])
+    }, [botMove, gameOver])
 
     useEffect(() => {
         if (playState === true && choiceState === "") {
@@ -60,12 +62,18 @@ const Game: FunctionComponent = (): JSX.Element => {
         if (playState) {
             setChoice(currentPlayer)
         }
-        checkWinner(board, currentPlayer, dispatch)
-    }, [currentPlayer, playState])
+        if (!botMove && rivalState) checkWinner(board, currentPlayer, dispatch);
+    }, [currentPlayer])
 
     useEffect(() => {
         dispatch(play(false))
     }, [winnerX, winnerO])
+
+    useEffect(() => {
+        if (gameOver) {
+            dispatch(resetGame())
+        }
+    }, [gameOver])
 
     useEffect(() => {
         if (board.indexOf("") === -1) {
