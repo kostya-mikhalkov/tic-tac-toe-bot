@@ -53,6 +53,10 @@ const gameSlice = createSlice({
             if (action.payload === 'O') {
                 state.winner.o = state.winner.o + 1;
             }
+            if (action.payload === 'Reset') {
+                state.winner.o = 0;
+                state.winner.x = 0;
+            }
             state.gameOver = true
         },
         gameOver: (state) => {

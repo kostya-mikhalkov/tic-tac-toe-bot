@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../../store/store";
 import imageX from '../../images/X_little.svg';
 import imageO from '../../images/O_little.svg';
-import checkWinner from "../CheckWinner/checkWinner";
 import { addElements, addPlayer, botMoveOnBoard } from "../../store/slices/gameSlice";
 
 interface CellProps {
@@ -25,14 +24,12 @@ const Cell: FunctionComponent<CellProps> = ({ ind, classes }): JSX.Element => {
                 dispatch(addElements(ind));
                 dispatch(addPlayer(currentPlayer === 'X' ? 'O' : 'X'));
                 dispatch(botMoveOnBoard(true));
-                // checkWinner(board, currentPlayer, dispatch)
             }
         }
         if (botState) {
             if (playState && board[ind] === '') {
                 dispatch(addElements(ind));
                 dispatch(addPlayer(currentPlayer === 'X' ? 'O' : 'X'));
-                // checkWinner(board, currentPlayer, dispatch)
             }
         }
     };

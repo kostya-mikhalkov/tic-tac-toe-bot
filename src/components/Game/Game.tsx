@@ -9,6 +9,7 @@ import ChoiceCrossOrZeroSelector from "../ChoiceCrossOrZeroSelector/ChoiceCrossO
 import Score from "../Score/Score";
 import Cell from "../Cell/Cell";
 import { play } from "../../store/slices/playSlice";
+import { addWinner } from "../../store/slices/gameSlice";
 import elementTypes from "../../types/elementTypes";
 import checkWinner from "../CheckWinner/checkWinner";
 import { selectXO } from "../../store/slices/choiceSlice";
@@ -80,6 +81,10 @@ const Game: FunctionComponent = (): JSX.Element => {
             dispatch(play(false))
         }
     }, [botMove]);
+
+    useEffect(() => {
+        dispatch(addWinner('Reset'))
+    }, [rivalState]);
 
     const onChangeXO = (elem: elementTypes): void => {
         setChoice(elem)
