@@ -28,6 +28,7 @@ const Game: FunctionComponent = (): JSX.Element => {
     const currentPlayer = useSelector((state: RootState) => state.game.currentPlayer);
     const gameOver = useSelector((state: RootState) => state.game.gameOver);
     const rivalState = useSelector((state: RootState) => state.rival.rival);
+    const difficultyBot = useSelector((state: RootState) => state.game.botDifficulty);
     const {board, botMove} = botState;
     const dispatch = useDispatch();
 
@@ -40,8 +41,7 @@ const Game: FunctionComponent = (): JSX.Element => {
         let timerId: ReturnType<typeof setTimeout> | undefined;
         if(botMove && !gameOver) {
             setTimeout(() => {
-                BotMoveLogick(board, currentPlayer, dispatch);
-                checkWinner(board, currentPlayer, dispatch);
+                BotMoveLogick(board, currentPlayer, dispatch, difficultyBot);
             }, 1000)
         }
         return () => {
@@ -80,6 +80,7 @@ const Game: FunctionComponent = (): JSX.Element => {
         if (board.indexOf("") === -1) {
             dispatch(play(false))
         }
+        checkWinner(board, currentPlayer, dispatch);
     }, [botMove]);
 
     useEffect(() => {

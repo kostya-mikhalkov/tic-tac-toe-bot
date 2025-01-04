@@ -1,40 +1,21 @@
 import { AppDispatch } from '../../store/store';
-import { addElements, botMoveOnBoard, addPlayer } from "../../store/slices/gameSlice";
+import easyDifficulty from './botDifficulty/easyDifficulty';
+import mediumDifficulty from './botDifficulty/mediumDifficulty';
+import hardDifficulty from './botDifficulty/hardDifficulty';
 
-const BotMoveLogick = (board: string[], player: string, dispatch: AppDispatch): void => {
-    console.log("Current Board State: ", board);
-
-    const emptyIndices: number[] = [];
-
-    board.forEach((item, ind) => {
-        if (item === "") {
-            emptyIndices.push(ind);
-        }
-    });
-
-    if (emptyIndices.length === 0) {
-        // Если нет пустых индексов, завершаем функцию
-        console.log("No empty indices found.");
-        return;
+const BotMoveLogick = (board: string[], 
+                       player: string, 
+                       dispatch: AppDispatch,
+                       difficulty: string): void => {
+    if (difficulty === 'easy') {
+        easyDifficulty(board, player, dispatch)
     }
-
-    // Выбираем случайный индекс из списка пустых индексов
-    const randomIndex = Math.floor(Math.random() * emptyIndices.length);
-    const chosenIndex = emptyIndices[randomIndex];
-
-    console.log("Chosen Index: ", chosenIndex);
-
-    // Проверка на корректность индекса
-    if (chosenIndex === undefined || board[chosenIndex] !== "") {
-        console.error("Invalid index chosen. Aborting move.");
-        return;
+    if(difficulty === 'medium') {
+        mediumDifficulty(board, player, dispatch)
     }
-
-    dispatch(addElements(chosenIndex));
-    dispatch(botMoveOnBoard(false));
-    dispatch(addPlayer(player === 'X' ? 'O' : 'X'));
-
-    console.log("Board state after bot move: ", board);
+    if(difficulty === 'hard') {
+        hardDifficulty(board, player, dispatch)
+    }
 }
 
 export default BotMoveLogick;
