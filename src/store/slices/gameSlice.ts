@@ -4,6 +4,7 @@ import elementTypes from '../../types/elementTypes';
 interface gameState {
     board: string[],
     currentPlayer: elementTypes,
+    winnerPlayer: elementTypes,
     botDifficulty: 'easy' | 'medium' | 'hard',
     botMove: boolean,
     winner: {
@@ -16,6 +17,7 @@ interface gameState {
 const initialState: gameState = {
     board: Array(9).fill(""),
     currentPlayer: "",
+    winnerPlayer: "",
     botDifficulty: "easy",
     botMove: false,
     winner: {
@@ -39,6 +41,9 @@ const gameSlice = createSlice({
         },
         addPlayer: (state, action: PayloadAction<elementTypes>) => {
             state.currentPlayer = action.payload
+        },
+        addWinnerPlayer: (state, action: PayloadAction<elementTypes>) => {
+            state.winnerPlayer = action.payload
         },
         addDifficulty: (state, action: PayloadAction<'easy' | 'medium' | 'hard'>) => {
             state.botDifficulty = action.payload
@@ -65,5 +70,5 @@ const gameSlice = createSlice({
     }
 })
 
-export const {addElements, addPlayer, addDifficulty, botMoveOnBoard, resetGame, addWinner, gameOver} = gameSlice.actions;
+export const {addElements, addPlayer, addWinnerPlayer, addDifficulty, botMoveOnBoard, resetGame, addWinner, gameOver} = gameSlice.actions;
 export const gameReducer = gameSlice.reducer;

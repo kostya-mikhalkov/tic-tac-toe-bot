@@ -15,17 +15,20 @@ import checkWinner from "../CheckWinner/checkWinner";
 import { selectXO } from "../../store/slices/choiceSlice";
 import { addPlayer, resetGame } from "../../store/slices/gameSlice";
 import { RootState } from "../../store/store";
+import Modal from "../Modal/Modal";
 
 import './Game.scss';
 
 const Game: FunctionComponent = (): JSX.Element => {
     const [choice, setChoice] = useState<elementTypes>('');
+    const [openModal, setOpenModal] = useState(false);
     const botState = useSelector((state: RootState) => state.game);
     const winnerO = useSelector((state: RootState) => state.game.winner.o);
     const winnerX = useSelector((state: RootState) => state.game.winner.x);
     const playState = useSelector((state: RootState) => state.play.play);
     const choiceState = useSelector((state: RootState) => state.choice.selection);
     const currentPlayer = useSelector((state: RootState) => state.game.currentPlayer);
+    const winnerPlayer = useSelector((state: RootState) => state.game.winnerPlayer);
     const gameOver = useSelector((state: RootState) => state.game.gameOver);
     const rivalState = useSelector((state: RootState) => state.rival.rival);
     const difficultyBot = useSelector((state: RootState) => state.game.botDifficulty);
@@ -74,6 +77,9 @@ const Game: FunctionComponent = (): JSX.Element => {
         if (gameOver) {
             dispatch(resetGame())
         }
+        if (gameOver && currentPlayer !== '') {
+            setOpenModal(true)
+        }
     }, [gameOver])
 
     useEffect(() => {
@@ -89,6 +95,10 @@ const Game: FunctionComponent = (): JSX.Element => {
 
     const onChangeXO = (elem: elementTypes): void => {
         setChoice(elem)
+    }
+
+    const onClose = () => {
+        setOpenModal(false)
     }
 
     return (
@@ -109,6 +119,7 @@ const Game: FunctionComponent = (): JSX.Element => {
                 <HumanBotSelector />
             </div>
             <ChoiceCrossOrZeroSelector onChangeXO={onChangeXO} choiceXO={choice}/>
+            <Modal winnerElement={winnerPlayer} isOpen={openModal} onClose={onClose}/>
         </div>
     )
 }

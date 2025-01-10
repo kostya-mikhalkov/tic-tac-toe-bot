@@ -1,5 +1,5 @@
 import { AppDispatch } from "../../store/store";
-import { addWinner, gameOver } from "../../store/slices/gameSlice";
+import { addWinner, gameOver, addWinnerPlayer } from "../../store/slices/gameSlice";
 import { play } from "../../store/slices/playSlice";
 
 const checkWinner = (board: string[], playerCurrent: string, dispatch: AppDispatch) => {
@@ -17,6 +17,7 @@ const checkWinner = (board: string[], playerCurrent: string, dispatch: AppDispat
     for (const key of winnerCombination) {
         if (key.every(index => board[index] === player)) {
             dispatch(addWinner(player));
+            dispatch(addWinnerPlayer(player));
             dispatch(gameOver());
             dispatch(play(false));
             return;
