@@ -13,7 +13,7 @@ import { addWinner } from "../../store/slices/gameSlice";
 import elementTypes from "../../types/elementTypes";
 import checkWinner from "../CheckWinner/checkWinner";
 import { selectXO } from "../../store/slices/choiceSlice";
-import { addPlayer, resetGame } from "../../store/slices/gameSlice";
+import { addPlayer, resetGame, addCheckedWinnerBoolean } from "../../store/slices/gameSlice";
 import { RootState } from "../../store/store";
 import Modal from "../Modal/Modal";
 
@@ -84,7 +84,9 @@ const Game: FunctionComponent = (): JSX.Element => {
 
     useEffect(() => {
         if (board.indexOf("") === -1) {
-            dispatch(play(false))
+            dispatch(play(false));
+            setOpenModal(true);
+            resetGame();
         }
         checkWinner(board, currentPlayer, dispatch);
     }, [botMove]);
@@ -98,7 +100,8 @@ const Game: FunctionComponent = (): JSX.Element => {
     }
 
     const onClose = () => {
-        setOpenModal(false)
+        setOpenModal(false);
+        dispatch(addCheckedWinnerBoolean(false));
     }
 
     return (

@@ -1,5 +1,5 @@
 import { AppDispatch } from "../../store/store";
-import { addWinner, gameOver, addWinnerPlayer } from "../../store/slices/gameSlice";
+import { addWinner, gameOver, addWinnerPlayer, addCheckedWinnerBoolean } from "../../store/slices/gameSlice";
 import { play } from "../../store/slices/playSlice";
 
 const checkWinner = (board: string[], playerCurrent: string, dispatch: AppDispatch) => {
@@ -20,6 +20,7 @@ const checkWinner = (board: string[], playerCurrent: string, dispatch: AppDispat
             dispatch(addWinnerPlayer(player));
             dispatch(gameOver());
             dispatch(play(false));
+            dispatch(addCheckedWinnerBoolean(true));
             return;
         }
     }

@@ -5,6 +5,7 @@ interface gameState {
     board: string[],
     currentPlayer: elementTypes,
     winnerPlayer: elementTypes,
+    checkedWinnerBoolean: boolean,
     botDifficulty: 'easy' | 'medium' | 'hard',
     botMove: boolean,
     winner: {
@@ -18,6 +19,7 @@ const initialState: gameState = {
     board: Array(9).fill(""),
     currentPlayer: "",
     winnerPlayer: "",
+    checkedWinnerBoolean: false,
     botDifficulty: "easy",
     botMove: false,
     winner: {
@@ -45,6 +47,9 @@ const gameSlice = createSlice({
         addWinnerPlayer: (state, action: PayloadAction<elementTypes>) => {
             state.winnerPlayer = action.payload
         },
+        addCheckedWinnerBoolean: (state, action: PayloadAction<boolean>) => {
+            state.checkedWinnerBoolean = action.payload
+        },
         addDifficulty: (state, action: PayloadAction<'easy' | 'medium' | 'hard'>) => {
             state.botDifficulty = action.payload
         },
@@ -70,5 +75,5 @@ const gameSlice = createSlice({
     }
 })
 
-export const {addElements, addPlayer, addWinnerPlayer, addDifficulty, botMoveOnBoard, resetGame, addWinner, gameOver} = gameSlice.actions;
+export const {addElements, addPlayer, addWinnerPlayer, addCheckedWinnerBoolean,addDifficulty, botMoveOnBoard, resetGame, addWinner, gameOver} = gameSlice.actions;
 export const gameReducer = gameSlice.reducer;
